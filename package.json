@@ -1,9 +1,25 @@
 {
-  "devDependencies": {
-    "standard-version": "^9.5.0"
-  },
-  "scripts": {
-    "release": "standard-version"
-  },
-  "version": "1.0.2"
-}
+    "name": "nutrimind",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+      "release": "standard-version",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/hasandi22/NutriMind-Project---ITBIN-2211-0105.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/hasandi22/NutriMind-Project---ITBIN-2211-0105/issues"
+    },
+    "homepage": "https://github.com/hasandi22/NutriMind-Project---ITBIN-2211-0105#readme",
+    "description": "",
+    "devDependencies": {
+      "commitizen": "^4.3.1",
+      "standard-version": "^9.5.0"
+    }
+  }
