@@ -19,12 +19,14 @@ android {
 
     buildTypes {
         getByName("debug") {
-
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
         }
 
         create("staging") {
             initWith(getByName("debug"))
-            
+            applicationIdSuffix = ".staging"
+            versionNameSuffix = "-staging"
             isDebuggable = true
         }
 
