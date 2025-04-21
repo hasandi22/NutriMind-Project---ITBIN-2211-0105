@@ -16,10 +16,10 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    
     buildFeatures {
         buildConfig = true // Enable BuildConfig for custom fields
     }
-
 
     flavorDimensions += "environment"
     productFlavors {
@@ -46,6 +46,14 @@ android {
         getByName("debug") {
             isDebuggable = true
         }
+
+        create("staging") {
+            initWith(getByName("debug"))
+            applicationIdSuffix = ".staging"
+            versionNameSuffix = "-staging"
+            isDebuggable = true
+        }
+
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
