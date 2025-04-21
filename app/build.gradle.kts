@@ -42,6 +42,14 @@ android {
         getByName("debug") {
             isDebuggable = true
         }
+
+        create("staging") {
+            initWith(getByName("debug"))
+            applicationIdSuffix = ".staging"
+            versionNameSuffix = "-staging"
+            isDebuggable = true
+        }
+
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
