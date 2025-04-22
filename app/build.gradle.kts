@@ -20,7 +20,6 @@ android {
         buildConfig = true // Enable BuildConfig for custom fields
     }
 
-
     flavorDimensions += "environment"
     productFlavors {
         create("dev") {
@@ -46,6 +45,7 @@ android {
         getByName("debug") {
             isDebuggable = true
         }
+
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
