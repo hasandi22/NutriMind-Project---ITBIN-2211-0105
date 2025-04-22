@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    id("com.google.gms.google-services")
+    id("com.google.gms.google-services") // Firebase plugin
 }
 
 android {
@@ -16,6 +16,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildFeatures {
         buildConfig = true // Enable BuildConfig for custom fields
     }
@@ -45,7 +46,6 @@ android {
         getByName("debug") {
             isDebuggable = true
         }
-
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
