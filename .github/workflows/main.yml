@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        flavor: [Dev, Staging1, Prod]
+        flavor: [Dev, Staging1, Prod]  # Define flavors to run unit tests for
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
@@ -31,7 +31,7 @@ jobs:
       - name: Grant execute permission for Gradle wrapper
         run: chmod +x ./gradlew
       - name: Run Unit Tests for ${{ matrix.flavor }}
-        run: ./gradlew test${{ matrix.flavor }}DebugUnitTest
+        run: ./gradlew test${{ matrix.flavor }}DebugUnitTest  # Ensure this matches the correct task name in your build
 
   integration-test:
     runs-on: ubuntu-latest
