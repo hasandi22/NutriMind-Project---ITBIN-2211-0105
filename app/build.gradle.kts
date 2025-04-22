@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    id("com.google.gms.google-services")
+    id("com.google.gms.google-services") // Firebase plugin
 }
 
 android {
@@ -18,30 +18,27 @@ android {
     }
 
     buildFeatures {
-        buildConfig = true
+        buildConfig = true // Enable BuildConfig for custom fields
     }
 
     flavorDimensions += "environment"
-
     productFlavors {
         create("dev") {
             dimension = "environment"
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            buildConfigField("String", "BASE_URL", "\"https://api-dev.nutrimind.com/\"")
-            resValue("string", "app_name", "NutriMind Dev")
+            buildConfigField("String", "BASE_URL", "\"https://api-dev.example.com\"")
         }
-        create("staging") {
+        create("staging1") {
             dimension = "environment"
-            applicationIdSuffix = ".staging"
-            versionNameSuffix = "-staging"
-            buildConfigField("String", "BASE_URL", "\"https://api-staging.nutrimind.com/\"")
-            resValue("string", "app_name", "NutriMind Staging")
+            applicationIdSuffix = ".staging1"
+            versionNameSuffix = "-staging1"
+            buildConfigField("String", "BASE_URL", "\"https://api-staging1.example.com\"")
         }
         create("prod") {
             dimension = "environment"
-            buildConfigField("String", "BASE_URL", "\"https://api-prod.nutrimind.com/\"")
-            resValue("string", "app_name", "NutriMind")
+            // No suffix for prod
+            buildConfigField("String", "BASE_URL", "\"https://api-prod.example.com\"")
         }
     }
 

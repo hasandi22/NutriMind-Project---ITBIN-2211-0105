@@ -27,9 +27,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:83005993152:android:4f87b4889ee95ac7d7fd25",
+        "mobilesdk_app_id": "1:83005993152:android:c1f72eb1f5f27d7dd7fd25",
         "android_client_info": {
-          "package_name": "com.nutrimind.app.dev"
+          "package_name": "com.example.nutrimind.dev"
         }
       },
       "oauth_client": [],
@@ -46,9 +46,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:83005993152:android:e32b86b5fa8eacf5d7fd25",
+        "mobilesdk_app_id": "1:83005993152:android:affc0ce7d2d9c9a3d7fd25",
         "android_client_info": {
-          "package_name": "com.nutrimind.app.prod"
+          "package_name": "com.example.nutrimind.prod"
         }
       },
       "oauth_client": [],
@@ -65,9 +65,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:83005993152:android:d6ff0e3463ec35e9d7fd25",
+        "mobilesdk_app_id": "1:83005993152:android:340cdd510c7d0d46d7fd25",
         "android_client_info": {
-          "package_name": "com.nutrimind.app.staging1"
+          "package_name": "com.example.nutrimind.staging1"
         }
       },
       "oauth_client": [],
