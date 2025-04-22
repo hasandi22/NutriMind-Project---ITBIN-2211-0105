@@ -36,6 +36,7 @@ android {
         }
         create("prod") {
             dimension = "environment"
+            // No suffix for prod
             buildConfigField("String", "BASE_URL", "\"https://api-prod.example.com\"")
         }
     }
