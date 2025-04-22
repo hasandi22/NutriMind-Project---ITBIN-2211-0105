@@ -20,7 +20,6 @@ android {
         buildConfig = true // Enable BuildConfig for custom fields
     }
 
-
     flavorDimensions += "environment"
     productFlavors {
         create("dev") {
@@ -37,7 +36,6 @@ android {
         }
         create("prod") {
             dimension = "environment"
-            // No suffix for prod
             buildConfigField("String", "BASE_URL", "\"https://api-prod.example.com\"")
         }
     }
@@ -46,6 +44,7 @@ android {
         getByName("debug") {
             isDebuggable = true
         }
+
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
