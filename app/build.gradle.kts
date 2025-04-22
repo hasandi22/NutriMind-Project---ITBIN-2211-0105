@@ -16,7 +16,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-    
+
     buildFeatures {
         buildConfig = true // Enable BuildConfig for custom fields
     }
@@ -37,20 +37,12 @@ android {
         }
         create("prod") {
             dimension = "environment"
-            // No suffix for prod
             buildConfigField("String", "BASE_URL", "\"https://api-prod.example.com\"")
         }
     }
 
     buildTypes {
         getByName("debug") {
-            isDebuggable = true
-        }
-
-        create("staging") {
-            initWith(getByName("debug"))
-            applicationIdSuffix = ".staging"
-            versionNameSuffix = "-staging"
             isDebuggable = true
         }
 
