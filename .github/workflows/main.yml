@@ -108,3 +108,39 @@ jobs:
         run: echo "If pipeline fails, send alert (simulated)"
       - name: Synthetic Monitoring
         run: echo "Simulating login → dashboard → logout"
+
+  deploy-green:
+  runs-on: ubuntu-latest
+  needs: build-and-upload
+  steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Firebase CLI
+      run: npm install -g firebase-tools
+
+    - name: Authenticate with Firebase
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      run: firebase login:ci --token "$FIREBASE_TOKEN"
+
+    - name: Deploy to Preview Channel (Green)
+      run: firebase hosting:channel:deploy green --project nutrimind-c2952
+
+    - name: Output Preview URL
+      run: echo "Preview deployed at: https://green--nutrimind-c2952.web.app"
+
+
+  promote-green:
+    runs-on: ubuntu-latest
+    needs: deploy-green
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Promote Green to Production (Blue)
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: firebase deploy --only hosting --nutrimind-c2952.web.app
