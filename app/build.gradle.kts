@@ -16,7 +16,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildFeatures {
         buildConfig = true // Enable BuildConfig for custom fields
     }
