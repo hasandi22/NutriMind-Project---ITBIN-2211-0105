@@ -46,6 +46,25 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:83005993152:android:affc0ce7d2d9c9a3d7fd25",
+        "android_client_info": {
+          "package_name": "com.example.nutrimind.prod"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYI0DkNi9u_P6bxiLeZvtWTgjn_qWXP50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:83005993152:android:340cdd510c7d0d46d7fd25",
         "android_client_info": {
           "package_name": "com.example.nutrimind.staging1"
