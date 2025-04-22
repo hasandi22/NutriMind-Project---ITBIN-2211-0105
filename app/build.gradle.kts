@@ -22,23 +22,27 @@ android {
     }
 
     flavorDimensions += "environment"
+
     productFlavors {
         create("dev") {
             dimension = "environment"
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            buildConfigField("String", "BASE_URL", "\"https://api-dev.example.com\"")
+            buildConfigField("String", "BASE_URL", "\"https://api-dev.nutrimind.com/\"")
+            resValue("string", "app_name", "NutriMind Dev")
         }
-        create("staging1") {
+        create("staging") {
             dimension = "environment"
-            applicationIdSuffix = ".staging1"
-            versionNameSuffix = "-staging1"
-            buildConfigField("String", "BASE_URL", "\"https://api-staging1.example.com\"")
+            applicationIdSuffix = ".staging"
+            versionNameSuffix = "-staging"
+            buildConfigField("String", "BASE_URL", "\"https://api-staging.nutrimind.com/\"")
+            resValue("string", "app_name", "NutriMind Staging")
         }
         create("prod") {
             dimension = "environment"
             // No suffix for prod
-            buildConfigField("String", "BASE_URL", "\"https://api-prod.example.com\"")
+            buildConfigField("String", "BASE_URL", "\"https://api-prod.nutrimind.com/\"")
+            resValue("string", "app_name", "NutriMind")
         }
     }
 
