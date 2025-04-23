@@ -60,7 +60,7 @@ jobs:
           echo "android.signingConfigs.release.keyPassword = '${{ secrets.KEY_PASSWORD }}'" >> app/build.gradle
 
       - name: Build APK (Release)
-        run: ./gradlew :app:assembleRelease -b app/build.gradle.kts
+        run: ./gradlew :app:assembleRelease
 
   upload-to-firebase:
     runs-on: ubuntu-latest
