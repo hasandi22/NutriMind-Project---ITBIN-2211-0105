@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    kotlin("android")
+    id("org.jetbrains.kotlin.android") version "1.9.10"
     id("com.google.gms.google-services")
 }
 
