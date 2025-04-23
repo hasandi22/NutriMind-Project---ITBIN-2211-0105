@@ -61,22 +61,20 @@ jobs:
       - name: Install Firebase CLI
         run: |
           curl -sL https://firebase.tools | bash
-          echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}" > $HOME/firebase-service-account.json
-        shell: bash
 
-      - name: Configure Firebase Project
+      - name: Set up Service Account Key
         run: |
-          firebase --version
-          firebase auth:login:ci --token "${{ secrets.FIREBASE_CI_TOKEN }}"
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_CI_TOKEN }}
+          echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}" | base64 --decode > $HOME/firebase-service-account.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase-service-account.json
 
       - name: Distribute APK to Firebase App Distribution
         run: |
+          firebase --version
           firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk \
             --app 1:83005993152:android:3a13b0fb9726bdb7d7fd25 \
             --groups "testers_group" \
             --token "${{ secrets.FIREBASE_CI_TOKEN }}"
+
 
   observability:
     runs-on: ubuntu-latest
