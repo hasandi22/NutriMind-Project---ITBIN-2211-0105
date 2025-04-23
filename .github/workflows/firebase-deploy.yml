@@ -3,8 +3,7 @@ name: Firebase Deploy
 on:
   push:
     branches: [main]
-  # Or trigger manually:
-  # workflow_dispatch:
+ 
 
 jobs:
   unit-test:
@@ -45,7 +44,6 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             gradle-${{ runner.os }}-
-
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
@@ -71,9 +69,9 @@ jobs:
       - name: Distribute APK to Firebase App Distribution
         run: |
           firebase --version
-          firebase appdistribution:distribute Nutrimind/app/build/outputs/apk/release/app-release.apk \
+          firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk \
             --app 1:83005993152:android:3a13b0fb9726bdb7d7fd25 \
-            --groups "testers_group"
+            --groups "testers_group"  # Ensure this group matches your Firebase tester group
 
   observability:
     runs-on: ubuntu-latest
@@ -84,16 +82,13 @@ jobs:
           echo "Logging user activity..."
           echo "User opens dashboard"
           echo "Build successfully uploaded to Firebase"
-
       - name: Metric Simulation
         run: |
           echo "Metric: build_success=1"
           echo "Metric: apk_uploaded=1"
           echo "Metric: testers_invited=5"
-
       - name: Alerting Simulation
         run: echo "If the pipeline fails, send alert (simulated)"
 
       - name: Synthetic Monitoring
         run: echo "Simulating user interaction:login → dashboard → logout"
-
