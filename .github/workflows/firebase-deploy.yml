@@ -58,7 +58,7 @@ jobs:
           echo """
           android {
               signingConfigs {
-                  create("release") {
+                  create(\"release\") {
                       storeFile = file(\"$HOME/keystore.jks\")
                       storePassword = \"${{ secrets.KEYSTORE_PASSWORD }}\"
                       keyAlias = \"${{ secrets.KEY_ALIAS }}\"
@@ -67,7 +67,7 @@ jobs:
               }
 
               buildTypes {
-                  getByName("release") {
+                  getByName(\"release\") {
                       signingConfig = signingConfigs.getByName("release")
                   }
               }
