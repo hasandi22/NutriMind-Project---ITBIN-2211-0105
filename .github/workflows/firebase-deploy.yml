@@ -47,32 +47,6 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: Decode Keystore
-        run: |
-          echo "$ANDROID_KEYSTORE" | base64 --decode > $HOME/keystore.jks
-        env:
-          ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
-
-      - name: Inject Signing Config for Kotlin DSL
-        run: |
-          echo """
-          android {
-              signingConfigs {
-                  release {
-                      storeFile = file("$HOME/keystore.jks")
-                      storePassword = "${{ secrets.KEYSTORE_PASSWORD }}"
-                      keyAlias = "${{ secrets.KEY_ALIAS }}"
-                      keyPassword = "${{ secrets.KEY_PASSWORD }}"
-                  }
-              }
-              buildTypes {
-                  release {
-                      signingConfig = signingConfigs.release
-                  }
-              }
-          }
-          """ >> app/build.gradle.kts
-          
       - name: Build APK (Release)
         run: ./gradlew :app:assembleRelease
 
