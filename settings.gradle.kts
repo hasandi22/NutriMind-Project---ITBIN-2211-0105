@@ -10,7 +10,13 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
     }
+
+    plugins {
+     
+        kotlin("android") version "1.9.10"
+    }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -21,6 +27,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "NutriMind"
 include(":app")
-
-
-
