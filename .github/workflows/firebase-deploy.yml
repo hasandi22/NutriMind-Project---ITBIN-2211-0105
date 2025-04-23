@@ -43,7 +43,6 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/*.gradle.kts') }}
           restore-keys: |
             gradle-${{ runner.os }}-
-
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
@@ -58,22 +57,20 @@ jobs:
           echo """
           android {
               signingConfigs {
-                  create(\"release\") {
-                      storeFile = file(\"$HOME/keystore.jks\")
-                      storePassword = \"${{ secrets.KEYSTORE_PASSWORD }}\"
-                      keyAlias = \"${{ secrets.KEY_ALIAS }}\"
-                      keyPassword = \"${{ secrets.KEY_PASSWORD }}\"
+                  create("release") {
+                      storeFile = file("$HOME/keystore.jks")
+                      storePassword = "${{ secrets.KEYSTORE_PASSWORD }}"
+                      keyAlias = "${{ secrets.KEY_ALIAS }}"
+                      keyPassword = "${{ secrets.KEY_PASSWORD }}"
                   }
               }
-
               buildTypes {
-                  getByName(\"release\") {
+                  getByName("release") {
                       signingConfig = signingConfigs.getByName("release")
                   }
               }
           }
           """ >> app/build.gradle.kts
-
       - name: Build APK (Release)
         run: ./gradlew :app:assembleRelease
 
@@ -98,7 +95,7 @@ jobs:
           firebase --version
           firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk \
             --app 1:83005993152:android:3a13b0fb9726bdb7d7fd25 \
-            --groups "testers_group"
+            --groups "testers_group"  # Make sure this group exists in Firebase
 
   observability:
     runs-on: ubuntu-latest
@@ -120,4 +117,6 @@ jobs:
         run: echo "If the pipeline fails, send alert (simulated)"
 
       - name: Synthetic Monitoring
-        run: echo "Simulating user interaction:login → dashboard → logout"
+        run: |
+          echo "Simulating user interaction: login → dashboard → logout"
+          # Add your synthetic monitoring logic here if required
