@@ -71,7 +71,7 @@ jobs:
       - name: Distribute APK to Firebase App Distribution
         run: |
           firebase --version
-          firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk \
+          firebase appdistribution:distribute Nutrimind/app/build/outputs/apk/release/app-release.apk \
             --app 1:83005993152:android:3a13b0fb9726bdb7d7fd25 \
             --groups "testers_group"
 
