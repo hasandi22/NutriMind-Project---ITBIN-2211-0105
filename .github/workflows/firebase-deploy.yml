@@ -40,9 +40,10 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/*.gradle.kts') }}
           restore-keys: |
             gradle-${{ runner.os }}-
+
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
@@ -52,12 +53,26 @@ jobs:
         env:
           ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
 
-      - name: Configure Gradle Signing Config
+      - name: Inject Signing Config for Kotlin DSL
         run: |
-          echo "android.signingConfigs.release.storeFile = file('$HOME/keystore.jks')" >> app/build.gradle
-          echo "android.signingConfigs.release.storePassword = '${{ secrets.KEYSTORE_PASSWORD }}'" >> app/build.gradle
-          echo "android.signingConfigs.release.keyAlias = '${{ secrets.KEY_ALIAS }}'" >> app/build.gradle
-          echo "android.signingConfigs.release.keyPassword = '${{ secrets.KEY_PASSWORD }}'" >> app/build.gradle
+          echo """
+          android {
+              signingConfigs {
+                  create("release") {
+                      storeFile = file(\"$HOME/keystore.jks\")
+                      storePassword = \"${{ secrets.KEYSTORE_PASSWORD }}\"
+                      keyAlias = \"${{ secrets.KEY_ALIAS }}\"
+                      keyPassword = \"${{ secrets.KEY_PASSWORD }}\"
+                  }
+              }
+
+              buildTypes {
+                  getByName("release") {
+                      signingConfig = signingConfigs.getByName("release")
+                  }
+              }
+          }
+          """ >> app/build.gradle.kts
 
       - name: Build APK (Release)
         run: ./gradlew :app:assembleRelease
@@ -83,7 +98,7 @@ jobs:
           firebase --version
           firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk \
             --app 1:83005993152:android:3a13b0fb9726bdb7d7fd25 \
-            --groups "testers_group"  # Ensure this group matches your Firebase tester group
+            --groups "testers_group"
 
   observability:
     runs-on: ubuntu-latest
@@ -94,11 +109,13 @@ jobs:
           echo "Logging user activity..."
           echo "User opens dashboard"
           echo "Build successfully uploaded to Firebase"
+
       - name: Metric Simulation
         run: |
           echo "Metric: build_success=1"
           echo "Metric: apk_uploaded=1"
           echo "Metric: testers_invited=5"
+
       - name: Alerting Simulation
         run: echo "If the pipeline fails, send alert (simulated)"
 
