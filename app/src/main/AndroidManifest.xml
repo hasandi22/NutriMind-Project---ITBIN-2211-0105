@@ -20,12 +20,7 @@
         <activity
             android:name=".DiaryItem"
             android:exported="false" />
-        <activity
-            android:name=".DeleteDiary"
-            android:exported="false" />
-        <activity
-            android:name=".UpdateDiaryActivity"
-            android:exported="false" />
+       
         <activity
             android:name=".ViewPastDiaries"
             android:exported="false" />
