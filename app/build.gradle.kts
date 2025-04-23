@@ -1,12 +1,12 @@
 plugins {
-
     id("com.android.application")
     id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "com.example.nutrimind"
     compileSdk = 35
+
+    namespace = "com.example.nutrimind"
 
     defaultConfig {
         applicationId = "com.example.nutrimind"
@@ -18,15 +18,26 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("keystore.jks") // Full or relative path
+            storePassword = "Hasandi"
+            keyAlias = "nutrimind-key"
+            keyPassword = "Hasandi"
+        }
+    }
+
     buildTypes {
-        release {
+        getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release") // Use the correct signingConfig
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -34,22 +45,17 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.firebase.firestore)
     implementation("com.google.firebase:firebase-auth:22.3.1")
-    implementation ("com.google.firebase:firebase-firestore:25.1.2")
+    implementation("com.google.firebase:firebase-firestore:25.1.2")
     implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
     implementation("com.google.firebase:firebase-analytics")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation ("com.google.firebase:firebase-storage:21.0.1")
-
-
-
-
+    implementation("com.google.firebase:firebase-storage:21.0.1")
 }
