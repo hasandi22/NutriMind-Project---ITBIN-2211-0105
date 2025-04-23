@@ -21,10 +21,10 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("keystore.jks") // Full or relative path
-            storePassword = "Hasandi"
-            keyAlias = "nutrimind-key"
-            keyPassword = "Hasandi"
+            storeFile = file(System.getenv("KEYSTORE_PATH") ?: "keystore.jks")
+            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "Hasandi"
+            keyAlias = System.getenv("KEY_ALIAS") ?: "nutrimind-key"
+            keyPassword = System.getenv("KEY_PASSWORD") ?: "Hasandi"
         }
     }
 
@@ -35,7 +35,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("release") // Use the correct signingConfig
+            signingConfig = signingConfigs.getByName("release") // ✅ FIXED: Properly quoted
         }
     }
 
@@ -45,7 +45,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = "1.8" // Set the JVM target to 1.8
+        jvmTarget = "1.8"
     }
 }
 
