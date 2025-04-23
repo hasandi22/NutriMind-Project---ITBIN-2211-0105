@@ -75,24 +75,24 @@ jobs:
             --app 1:83005993152:android:3a13b0fb9726bdb7d7fd25 \
             --groups "testers_group"
 
-  observability:
-    runs-on: ubuntu-latest
-    needs: [upload-to-firebase]
-    steps:
-      - name: Log Simulation
-        run: |
-          echo "Logging user activity..."
-          echo "User opens dashboard"
-          echo "Build successfully uploaded to Firebase"
+observability:
+  runs-on: ubuntu-latest
+  needs: [upload-to-firebase]
+  steps:
+    - name: Log Simulation
+      run: |
+        echo "Logging user activity..."
+        echo "User opens dashboard"
+        echo "Build successfully uploaded to Firebase"
 
-      - name: Metric Simulation
-        run: |
-          echo "Metric: build_success=1"
-          echo "Metric: apk_uploaded=1"
-          echo "Metric: testers_invited=5"
+    - name: Metric Simulation
+      run: |
+        echo "Metric: build_success=1"
+        echo "Metric: apk_uploaded=1"
+        echo "Metric: testers_invited=5"
 
-      - name: Alerting Simulation
-        run: echo "If the pipeline fails, send alert (simulated)"
+    - name: Alerting Simulation
+      run: echo "If the pipeline fails, send alert (simulated)"
 
-      - name: Synthetic Monitoring
-        run: echo "Simulating user interaction: login → dashboard → logout"
+    - name: Synthetic Monitoring
+      run: echo "Simulating user interaction: login → dashboard → logout"
