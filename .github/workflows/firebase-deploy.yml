@@ -71,7 +71,7 @@ jobs:
           firebase --version
           firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk \
             --app 1:83005993152:android:3a13b0fb9726bdb7d7fd25 \
-            --groups "testers_group"  # Ensure this group exists in Firebase
+            --groups "testers"  # Ensure this group exists in Firebase
   observability:
     runs-on: ubuntu-latest
     needs: [upload-to-firebase]
