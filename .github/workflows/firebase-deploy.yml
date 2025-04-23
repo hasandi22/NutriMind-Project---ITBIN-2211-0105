@@ -43,6 +43,7 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/*.gradle.kts') }}
           restore-keys: |
             gradle-${{ runner.os }}-
+      
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
@@ -57,7 +58,7 @@ jobs:
           echo """
           android {
               signingConfigs {
-                  create("release") {
+                  release {
                       storeFile = file("$HOME/keystore.jks")
                       storePassword = "${{ secrets.KEYSTORE_PASSWORD }}"
                       keyAlias = "${{ secrets.KEY_ALIAS }}"
@@ -65,12 +66,13 @@ jobs:
                   }
               }
               buildTypes {
-                  getByName("release") {
-                      signingConfig = signingConfigs.getByName("release")
+                  release {
+                      signingConfig = signingConfigs.release
                   }
               }
           }
           """ >> app/build.gradle.kts
+          
       - name: Build APK (Release)
         run: ./gradlew :app:assembleRelease
 
@@ -89,13 +91,13 @@ jobs:
         run: |
           echo "$FIREBASE_SERVICE_ACCOUNT_KEY" | base64 --decode > $HOME/firebase-service-account.json
           echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase-service-account.json" >> $GITHUB_ENV
-
+          
       - name: Distribute APK to Firebase App Distribution
         run: |
           firebase --version
           firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk \
             --app 1:83005993152:android:3a13b0fb9726bdb7d7fd25 \
-            --groups "testers_group"  # Make sure this group exists in Firebase
+            --groups "testers_group"  # Ensure this group exists in Firebase
 
   observability:
     runs-on: ubuntu-latest
@@ -106,17 +108,14 @@ jobs:
           echo "Logging user activity..."
           echo "User opens dashboard"
           echo "Build successfully uploaded to Firebase"
-
       - name: Metric Simulation
         run: |
           echo "Metric: build_success=1"
           echo "Metric: apk_uploaded=1"
           echo "Metric: testers_invited=5"
-
       - name: Alerting Simulation
         run: echo "If the pipeline fails, send alert (simulated)"
 
       - name: Synthetic Monitoring
         run: |
           echo "Simulating user interaction: login → dashboard → logout"
-          # Add your synthetic monitoring logic here if required
