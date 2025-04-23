@@ -3,7 +3,7 @@ name: Firebase Deploy
 on:
   push:
     branches: [main]
-  # Or trigger manually with:
+  # Or trigger manually:
   # workflow_dispatch:
 
 jobs:
@@ -59,22 +59,21 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Install Firebase CLI
-        run: |
-          curl -sL https://firebase.tools | bash
+        run: curl -sL https://firebase.tools | bash
 
-      - name: Set up Service Account Key
+      - name: Decode and configure Firebase credentials
+        env:
+          FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
         run: |
-          echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}" | base64 --decode > $HOME/firebase-service-account.json
-          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase-service-account.json
+          echo "$FIREBASE_SERVICE_ACCOUNT_KEY" | base64 --decode > $HOME/firebase-service-account.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase-service-account.json" >> $GITHUB_ENV
 
       - name: Distribute APK to Firebase App Distribution
         run: |
           firebase --version
           firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk \
             --app 1:83005993152:android:3a13b0fb9726bdb7d7fd25 \
-            --groups "testers_group" \
-            --token "${{ secrets.FIREBASE_CI_TOKEN }}"
-
+            --groups "testers_group"
 
   observability:
     runs-on: ubuntu-latest
@@ -96,5 +95,4 @@ jobs:
         run: echo "If the pipeline fails, send alert (simulated)"
 
       - name: Synthetic Monitoring
-        run: |
-          echo "Simulating user interaction: login → dashboard → logout"
+        run: echo "Simulating user interaction: login → dashboard → logout"
