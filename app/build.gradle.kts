@@ -28,20 +28,18 @@ android {
             dimension = "environment"
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            buildConfigField("String", "BASE_URL", "\"https://api-dev.nutrimind.com/\"")
-            resValue("string", "app_name", "NutriMind Dev")
+            buildConfigField("String", "BASE_URL", "\"https://api-dev.nutrimind.com\"")
         }
         create("staging") {
             dimension = "environment"
             applicationIdSuffix = ".staging"
             versionNameSuffix = "-staging"
-            buildConfigField("String", "BASE_URL", "\"https://api-staging.nutrimind.com/\"")
-            resValue("string", "app_name", "NutriMind Staging")
+            buildConfigField("String", "BASE_URL", "\"https://api-staging.nutrimind.com\"")
         }
         create("prod") {
             dimension = "environment"
-            buildConfigField("String", "BASE_URL", "\"https://api-prod.nutrimind.com/\"")
-            resValue("string", "app_name", "NutriMind")
+            // No suffix — keeps base package name
+            buildConfigField("String", "BASE_URL", "\"https://api-prod.nutrimind.com\"")
         }
     }
 
