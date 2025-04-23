@@ -12,4 +12,6 @@ jobs:
         uses: actions/add-to-project@v0.4.0
         with:
           project-url: https://github.com/users/hasandi22/projects/5
+
           github-token: ${{ secrets.PAT_TOKEN }}
+
