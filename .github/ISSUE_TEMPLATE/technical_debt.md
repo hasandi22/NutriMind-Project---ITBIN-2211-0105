@@ -8,6 +8,15 @@ assignees: ''
 ---
 
 ### Description
+
+### Impact
+
+
+### Suggested Improvement
+
+
+### Additional Context
+
 <!-- Describe the technical debt in detail. -->
 
 ### Impact
@@ -18,3 +27,4 @@ assignees: ''
 
 ### Additional Context
 <!-- Provide any other context or suggestions for improving the codebase. -->
+

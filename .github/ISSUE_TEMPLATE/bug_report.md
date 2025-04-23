@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 ### Description
-<!-- Describe the bug in detail. -->
+
 
 ### Steps to Reproduce
 1. Step one
@@ -16,6 +16,14 @@ assignees: ''
 3. Step three
 
 ### Expected Behavior
+
+
+
+### Actual Behavior
+
+
+### Additional Context
+
 <!-- What should have happened? -->
 
 ### Actual Behavior
@@ -23,3 +31,4 @@ assignees: ''
 
 ### Additional Context
 <!-- Add any other context about the problem here. -->
+
