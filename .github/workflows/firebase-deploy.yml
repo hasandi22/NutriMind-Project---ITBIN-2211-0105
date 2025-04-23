@@ -3,7 +3,6 @@ name: Firebase Deploy
 on:
   push:
     branches: [main]
- 
 
 jobs:
   unit-test:
@@ -47,6 +46,12 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
+      - name: Decode Keystore
+        run: |
+          echo "$ANDROID_KEYSTORE" | base64 --decode > $HOME/keystore.jks
+        env:
+          ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
+
       - name: Build APK (Release)
         run: ./gradlew assembleRelease
 
@@ -65,6 +70,13 @@ jobs:
         run: |
           echo "$FIREBASE_SERVICE_ACCOUNT_KEY" | base64 --decode > $HOME/firebase-service-account.json
           echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase-service-account.json" >> $GITHUB_ENV
+
+      - name: Configure Gradle Signing Config
+        run: |
+          echo "android.signingConfigs.release.storeFile = file('$HOME/keystore.jks')" >> app/build.gradle
+          echo "android.signingConfigs.release.storePassword = '${{ secrets.KEYSTORE_PASSWORD }}'" >> app/build.gradle
+          echo "android.signingConfigs.release.keyAlias = '${{ secrets.KEY_ALIAS }}'" >> app/build.gradle
+          echo "android.signingConfigs.release.keyPassword = '${{ secrets.KEY_PASSWORD }}'" >> app/build.gradle
 
       - name: Distribute APK to Firebase App Distribution
         run: |
