@@ -96,4 +96,5 @@ jobs:
         run: echo "If the pipeline fails, send alert (simulated)"
 
       - name: Synthetic Monitoring
-        run: echo "Simulating user interaction: login → dashboard → logout"
+        run: |
+          echo "Simulating user interaction: login → dashboard → logout"
