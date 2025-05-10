@@ -14,4 +14,3 @@ jobs:
           project-url: https://github.com/users/hasandi22/projects/5
 
           github-token: ${{ secrets.PAT_TOKEN }}
-
